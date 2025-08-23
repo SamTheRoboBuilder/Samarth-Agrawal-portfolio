@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Samarth Agrawal Photography Gallery</title>
 
- <!-- Preconnect to Google Fonts -->
+  <!-- Preconnect to Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -14,7 +14,6 @@
 
   <!-- Montserrat for subheading -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
-
 
   <style>
     html, body {
@@ -127,6 +126,48 @@
     .lightbox .nav:hover { background: #fff; opacity: 1; cursor: pointer; }
     .lightbox .prev { left: 3vw; transform: translateY(-50%);}
     .lightbox .next { right: 3vw; transform: translateY(-50%);}
+
+    /* Mobile only */
+    @media only screen and (max-width: 600px) {
+      h1 {
+        font-size: 80px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+      }
+      h2 {
+        font-size: 24px;
+        margin-top: 10px;
+        margin-bottom: 25px;
+      }
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 8px;
+        max-width: 100%;
+        margin: 0 auto 30px auto;
+      }
+      .gallery img {
+        border-radius: 8px;
+      }
+      .lightbox img {
+        max-width: 95vw;
+        max-height: 70vh;
+      }
+    }
+
+    /* Desktop only */
+    @media only screen and (min-width: 1024px) {
+      h1 {
+        font-size: 160px;
+      }
+      h2 {
+        font-size: 40px;
+      }
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        max-width: 1200px;
+      }
+    }
   </style>
 </head>
 <body>
