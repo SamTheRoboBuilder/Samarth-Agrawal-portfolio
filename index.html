@@ -4,22 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Samarth Agrawal Photography Gallery</title>
-
-  <!-- Preconnect to Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Bitcount Single for main heading -->
+  <!-- Fonts (as before) -->
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet" />
-
-  <!-- Montserrat for subheading -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
 
   <style>
     html, body {
-      scroll-behavior: smooth;
-      overscroll-behavior: contain;
       margin: 0;
+      padding: 0;
       font-family: sans-serif;
       background: #fff;
     }
@@ -41,210 +33,151 @@
       margin-top: 10px;
       margin-bottom: 40px;
     }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      max-width: 1200px;
-      margin: 0 auto 50px auto;
-      align-items: start;
+    .masonry {
+      column-count: 4;
+      column-gap: 18px;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 12px 40px 12px;
     }
-    .gallery a {
-      display: block;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-      transition: transform 0.2s;
+    @media (max-width: 1100px) {
+      .masonry { column-count: 3; }
     }
-    .gallery a:hover {
-      transform: scale(1.03);
-      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    @media (max-width: 750px) {
+      .masonry { column-count: 2; }
     }
-    .gallery img {
+    @media (max-width: 500px) {
+      .masonry { column-count: 1; padding: 0 4px 30px 4px; }
+      h1 { font-size: 2.2em; }
+      h2 { font-size: 1.1em; }
+    }
+    .masonry a {
+      display: inline-block;
       width: 100%;
-      height: auto;
+      margin: 0 0 18px 0;
+      break-inside: avoid;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+      overflow: hidden;
+      transition: transform 0.11s;
+      background: #f6f6f6;
+    }
+    .masonry a:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+    }
+    .masonry img {
+      width: 100%;
       display: block;
-      border-radius: 10px;
+      border-radius: 0;
       object-fit: cover;
+      height: auto;
     }
+
+    /* Lightbox as before */
     .lightbox {
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.97);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      z-index: 50;
-      scroll-margin-top: 100vh;
+      position: fixed; inset: 0; background: rgba(255,255,255,0.97);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 50;
     }
-    .lightbox:target {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .lightbox:target { opacity: 1; pointer-events: auto; }
     .lightbox img {
-      max-width: 95vw;
-      max-height: 80vh;
-      box-shadow: 0 6px 40px rgba(0,0,0,0.13);
-      border-radius: 16px;
-      background: #fff;
-      margin: auto;
-      display: block;
+      max-width: 95vw; max-height: 80vh;
+      box-shadow: 0 6px 40px rgba(0,0,0,0.13); border-radius: 16px;
+      background: #fff; margin: auto; display: block;
     }
     .lightbox .close {
-      position: fixed;
-      top: 24px;
-      right: 30px;
-      font-size: 2.5rem;
-      color: #111;
-      text-decoration: none;
-      font-weight: 200;
-      z-index: 60;
-      opacity: 0.6;
-      transition: opacity 0.2s;
+      position: fixed; top: 24px; right: 30px; font-size: 2.5rem; color: #111;
+      text-decoration: none; font-weight: 200; z-index: 60; opacity: 0.6; transition: opacity 0.2s;
     }
-    .lightbox .close:hover {
-      opacity: 1;
-    }
+    .lightbox .close:hover { opacity: 1; }
     .lightbox .nav {
-      position: absolute;
-      top: 50%;
-      color: #222;
-      font-size: 2.8rem;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      padding: 0.1em 0.25em;
-      text-decoration: none;
-      transition: background 0.18s;
-      line-height: 1;
-      opacity: 0.7;
-      z-index: 60;
-      user-select: none;
+      position: absolute; top: 50%; color: #222; font-size: 2.8rem;
+      background: rgba(255,255,255,0.3); border-radius: 50%; padding: 0.1em 0.25em;
+      text-decoration: none; transition: background 0.18s; line-height: 1; opacity: 0.7;
+      z-index: 60; user-select: none;
     }
     .lightbox .nav:hover { background: #fff; opacity: 1; cursor: pointer; }
     .lightbox .prev { left: 3vw; transform: translateY(-50%);}
     .lightbox .next { right: 3vw; transform: translateY(-50%);}
-  
-    /* MOBILE */
-    @media only screen and (max-width: 600px) {
-      h1 {
-        font-size: 80px;
-        margin-top: 20px;
-        margin-bottom: 15px;
-      }
-      h2 {
-        font-size: 24px;
-        margin-top: 10px;
-        margin-bottom: 25px;
-      }
-      .gallery {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 8px;
-        max-width: 100%;
-        margin: 0 auto 30px auto;
-      }
-      .gallery img {
-        border-radius: 8px;
-      }
-      .lightbox img {
-        max-width: 95vw;
-        max-height: 70vh;
-      }
-    }
-  
-    /* DESKTOP */
-    @media only screen and (min-width: 1024px) {
-      h1 {
-        font-size: 160px;
-      }
-      h2 {
-        font-size: 40px;
-      }
-      .gallery {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 12px;
-        max-width: 1200px;
-      }
-    }
   </style>
 </head>
 <body>
   <h1>SAMARTH AGRAWAL</h1>
   <h2>PHOTOGRAPHY</h2>
-  
-  <div class="gallery">
-    <a href="#img1"><img src="https://images.unsplash.com/photo-1752759596125-f3b2f0e8399f?q=80&w=1974&auto=format&fit=crop" alt="Photo 1"></a>
-    <a href="#img2"><img src="https://images.unsplash.com/photo-1749774245020-f6b6745a2d31?q=80&w=1935&auto=format&fit=crop" alt="Photo 2"></a>
-    <a href="#img3"><img src="https://images.unsplash.com/photo-1749773764660-10ac33731d14?q=80&w=1935&auto=format&fit=crop" alt="Photo 3"></a>
-    <a href="#img4"><img src="https://images.unsplash.com/photo-1754118658911-b866fa660f76?q=80&w=1935&auto=format&fit=crop" alt="Photo 4"></a>
-    <a href="#img5"><img src="https://images.unsplash.com/photo-1755799415138-72356191cf3c?q=80&w=1974&auto=format&fit=crop" alt="Photo 5"></a>
-    <a href="#img6"><img src="https://images.unsplash.com/photo-1752759595513-5afc0c33c137?q=80&w=1974&auto=format&fit=crop" alt="Photo 6"></a>
-    <a href="#img7"><img src="https://images.unsplash.com/photo-1749774245744-fe1152652d4c?q=80&w=1935&auto=format&fit=crop" alt="Photo 7"></a>
-    <a href="#img8"><img src="https://images.unsplash.com/photo-1749774246064-1c27dd0b0bb5?q=80&w=1935&auto=format&fit=crop" alt="Photo 8"></a>
-    <a href="#img9"><img src="https://images.unsplash.com/photo-1755189584673-42b0b337c138?q=80&w=1935&auto=format&fit=crop" alt="Photo 9"></a>
-    <a href="#img10"><img src="https://drive.usercontent.google.com/download?id=1HhR-EoNrmGPGVdCe_GyHL2GOo01vpLGm&export=view&authuser=0" alt="Photo 10"></a>
+
+  <div class="masonry">
+    <a href="#img1"><img src="https://images.unsplash.com/photo-1752759596125-f3b2f0e8399f?q=80&w=1200&auto=format&fit=crop" alt="Photo 1"></a>
+    <a href="#img2"><img src="https://images.unsplash.com/photo-1749774245020-f6b6745a2d31?q=80&w=1200&auto=format&fit=crop" alt="Photo 2"></a>
+    <a href="#img3"><img src="https://images.unsplash.com/photo-1749773764660-10ac33731d14?q=80&w=1200&auto=format&fit=crop" alt="Photo 3"></a>
+    <a href="#img4"><img src="https://images.unsplash.com/photo-1754118658911-b866fa660f76?q=80&w=1200&auto=format&fit=crop" alt="Photo 4"></a>
+    <a href="#img5"><img src="https://images.unsplash.com/photo-1755799415138-72356191cf3c?q=80&w=1200&auto=format&fit=crop" alt="Photo 5"></a>
+    <a href="#img6"><img src="https://images.unsplash.com/photo-1752759595513-5afc0c33c137?q=80&w=1200&auto=format&fit=crop" alt="Photo 6"></a>
+    <a href="#img7"><img src="https://images.unsplash.com/photo-1749774245744-fe1152652d4c?q=80&w=1200&auto=format&fit=crop" alt="Photo 7"></a>
+    <a href="#img8"><img src="https://images.unsplash.com/photo-1749774246064-1c27dd0b0bb5?q=80&w=1200&auto=format&fit=crop" alt="Photo 8"></a>
+    <a href="#img9"><img src="https://images.unsplash.com/photo-1755189584673-42b0b337c138?q=80&w=1200&auto=format&fit=crop" alt="Photo 9"></a>
+    <a href="#img10"><img src="https://images.pexels.com/photos/33580951/pexels-photo-33580951.jpeg?_gl=1*1h1vog1*_ga*MTU0MTIwNzU1OC4xNzU1OTY5NTI3*_ga_8JE65Q40S6*czE3NTU5Njk1MjckbzEkZzEkdDE3NTU5Njk2NDckajUyJGwwJGgw" alt="Photo 10"></a>
   </div>
 
+  <!-- LIGHTBOX OVERLAYS -->
   <div id="img1" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img10" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1752759596125-f3b2f0e8399f?q=80&w=1974&auto=format&fit=crop" alt="Photo 1">
+    <img src="https://images.unsplash.com/photo-1752759596125-f3b2f0e8399f?q=80&w=1974&auto=format&fit=crop" alt="Photo 1" />
     <a href="#img2" class="nav next">&#10095;</a>
   </div>
   <div id="img2" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img1" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1749774245020-f6b6745a2d31?q=80&w=1935&auto=format&fit=crop" alt="Photo 2">
+    <img src="https://images.unsplash.com/photo-1749774245020-f6b6745a2d31?q=80&w=1935&auto=format&fit=crop" alt="Photo 2" />
     <a href="#img3" class="nav next">&#10095;</a>
   </div>
   <div id="img3" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img2" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1749773764660-10ac33731d14?q=80&w=1935&auto=format&fit=crop" alt="Photo 3">
+    <img src="https://images.unsplash.com/photo-1749773764660-10ac33731d14?q=80&w=1935&auto=format&fit=crop" alt="Photo 3" />
     <a href="#img4" class="nav next">&#10095;</a>
   </div>
   <div id="img4" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img3" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1754118658911-b866fa660f76?q=80&w=1935&auto=format&fit=crop" alt="Photo 4">
+    <img src="https://images.unsplash.com/photo-1754118658911-b866fa660f76?q=80&w=1935&auto=format&fit=crop" alt="Photo 4" />
     <a href="#img5" class="nav next">&#10095;</a>
   </div>
   <div id="img5" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img4" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1755799415138-72356191cf3c?q=80&w=1974&auto=format&fit=crop" alt="Photo 5">
+    <img src="https://images.unsplash.com/photo-1755799415138-72356191cf3c?q=80&w=1974&auto=format&fit=crop" alt="Photo 5" />
     <a href="#img6" class="nav next">&#10095;</a>
   </div>
   <div id="img6" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img5" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1752759595513-5afc0c33c137?q=80&w=1974&auto=format&fit=crop" alt="Photo 6">
+    <img src="https://images.unsplash.com/photo-1752759595513-5afc0c33c137?q=80&w=1974&auto=format&fit=crop" alt="Photo 6" />
     <a href="#img7" class="nav next">&#10095;</a>
   </div>
   <div id="img7" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img6" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1749774245744-fe1152652d4c?q=80&w=1935&auto=format&fit=crop" alt="Photo 7">
+    <img src="https://images.unsplash.com/photo-1749774245744-fe1152652d4c?q=80&w=1935&auto=format&fit=crop" alt="Photo 7" />
     <a href="#img8" class="nav next">&#10095;</a>
   </div>
   <div id="img8" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img7" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1749774246064-1c27dd0b0bb5?q=80&w=1935&auto=format&fit=crop" alt="Photo 8">
+    <img src="https://images.unsplash.com/photo-1749774246064-1c27dd0b0bb5?q=80&w=1935&auto=format&fit=crop" alt="Photo 8" />
     <a href="#img9" class="nav next">&#10095;</a>
   </div>
   <div id="img9" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img8" class="nav prev">&#10094;</a>
-    <img src="https://images.unsplash.com/photo-1755189584673-42b0b337c138?q=80&w=1935&auto=format&fit=crop" alt="Photo 9">
+    <img src="https://images.unsplash.com/photo-1755189584673-42b0b337c138?q=80&w=1935&auto=format&fit=crop" alt="Photo 9" />
     <a href="#img10" class="nav next">&#10095;</a>
   </div>
   <div id="img10" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img9" class="nav prev">&#10094;</a>
-    <img src="https://drive.usercontent.google.com/download?id=1HhR-EoNrmGPGVdCe_GyHL2GOo01vpLGm&export=view&authuser=0" alt="Photo 10">
+    <img src="https://images.pexels.com/photos/33580951/pexels-photo-33580951.jpeg?_gl=1*1h1vog1*_ga*MTU0MTIwNzU1OC4xNzU1OTY5NTI3*_ga_8JE65Q40S6*czE3NTU5Njk1MjckbzEkZzEkdDE3NTU5Njk2NDckajUyJGwwJGgw" alt="Photo 10" />
     <a href="#img1" class="nav next">&#10095;</a>
   </div>
 </body>
