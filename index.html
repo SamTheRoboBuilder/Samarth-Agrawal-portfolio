@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Samarth Agrawal Photography Gallery</title>
-  <!-- Fonts (as before) -->
+
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
 
@@ -17,29 +18,30 @@
     }
     h1 {
       font-family: 'Bitcount Single', monospace, sans-serif;
+      font-size: 8vw;
       font-weight: 400;
-      font-size: 150px;
+      margin: 36px 0 15px;
       text-align: center;
-      margin-bottom: 20px;
-      margin-top: 36px;
       letter-spacing: 0.03em;
     }
     h2 {
       font-family: 'Montserrat', Arial, Helvetica, 'Trebuchet MS', Tahoma, sans-serif;
-      letter-spacing: 0.15em;
-      font-size: 40px;
+      font-size: 2em;
       font-weight: 300;
+      letter-spacing: 0.15em;
       text-align: center;
-      margin-top: 10px;
-      margin-bottom: 40px;
+      margin: 10px 0 36px;
     }
+
+    /* Masonry container using CSS columns */
     .masonry {
       column-count: 4;
-      column-gap: 18px;
+      column-gap: 16px;
       max-width: 1300px;
-      margin: 0 auto;
-      padding: 0 12px 40px 12px;
+      margin: 0 auto 40px;
+      padding: 0 12px;
     }
+
     @media (max-width: 1100px) {
       .masonry { column-count: 3; }
     }
@@ -47,59 +49,110 @@
       .masonry { column-count: 2; }
     }
     @media (max-width: 500px) {
-      .masonry { column-count: 1; padding: 0 4px 30px 4px; }
+      .masonry {
+        column-count: 1;
+        padding: 0 8px 30px;
+      }
       h1 { font-size: 2.2em; }
       h2 { font-size: 1.1em; }
     }
+
+    /* Masonry items */
     .masonry a {
       display: inline-block;
       width: 100%;
-      margin: 0 0 18px 0;
+      margin: 0 0 16px;
       break-inside: avoid;
       border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.1);
       overflow: hidden;
-      transition: transform 0.11s;
       background: #f6f6f6;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .masonry a:hover {
       transform: scale(1.03);
       box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+      z-index: 1;
     }
     .masonry img {
       width: 100%;
+      height: auto;
       display: block;
       border-radius: 0;
       object-fit: cover;
-      height: auto;
+      vertical-align: middle;
     }
 
-    /* Lightbox as before */
+    /* Lightbox styling */
     .lightbox {
-      position: fixed; inset: 0; background: rgba(255,255,255,0.97);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 50;
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 100;
     }
-    .lightbox:target { opacity: 1; pointer-events: auto; }
+    .lightbox:target {
+      opacity: 1;
+      pointer-events: auto;
+    }
     .lightbox img {
-      max-width: 95vw; max-height: 80vh;
-      box-shadow: 0 6px 40px rgba(0,0,0,0.13); border-radius: 16px;
-      background: #fff; margin: auto; display: block;
+      max-width: 95vw;
+      max-height: 80vh;
+      border-radius: 16px;
+      box-shadow: 0 6px 40px rgba(0,0,0,0.13);
+      background: white;
+      display: block;
+      margin: auto;
     }
     .lightbox .close {
-      position: fixed; top: 24px; right: 30px; font-size: 2.5rem; color: #111;
-      text-decoration: none; font-weight: 200; z-index: 60; opacity: 0.6; transition: opacity 0.2s;
+      position: fixed;
+      top: 24px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: #111;
+      text-decoration: none;
+      font-weight: 200;
+      opacity: 0.6;
+      z-index: 101;
+      transition: opacity 0.2s;
+      cursor: pointer;
     }
-    .lightbox .close:hover { opacity: 1; }
+    .lightbox .close:hover {
+      opacity: 1;
+    }
     .lightbox .nav {
-      position: absolute; top: 50%; color: #222; font-size: 2.8rem;
-      background: rgba(255,255,255,0.3); border-radius: 50%; padding: 0.1em 0.25em;
-      text-decoration: none; transition: background 0.18s; line-height: 1; opacity: 0.7;
-      z-index: 60; user-select: none;
+      position: absolute;
+      top: 50%;
+      font-size: 2.8rem;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      padding: 0.1em 0.25em;
+      line-height: 1;
+      text-decoration: none;
+      color: #222;
+      opacity: 0.7;
+      user-select: none;
+      z-index: 101;
+      cursor: pointer;
+      transition: background 0.18s, opacity 0.18s;
     }
-    .lightbox .nav:hover { background: #fff; opacity: 1; cursor: pointer; }
-    .lightbox .prev { left: 3vw; transform: translateY(-50%);}
-    .lightbox .next { right: 3vw; transform: translateY(-50%);}
+    .lightbox .nav:hover {
+      background: white;
+      opacity: 1;
+    }
+    .lightbox .prev {
+      left: 3vw;
+      transform: translateY(-50%);
+    }
+    .lightbox .next {
+      right: 3vw;
+      transform: translateY(-50%);
+    }
   </style>
 </head>
 <body>
@@ -119,7 +172,7 @@
     <a href="#img10"><img src="https://images.pexels.com/photos/33580951/pexels-photo-33580951.jpeg?_gl=1*1h1vog1*_ga*MTU0MTIwNzU1OC4xNzU1OTY5NTI3*_ga_8JE65Q40S6*czE3NTU5Njk1MjckbzEkZzEkdDE3NTU5Njk2NDckajUyJGwwJGgw" alt="Photo 10"></a>
   </div>
 
-  <!-- LIGHTBOX OVERLAYS -->
+  <!-- Lightbox overlays -->
   <div id="img1" class="lightbox" tabindex="-1">
     <a href="#" class="close" title="Close">&times;</a>
     <a href="#img10" class="nav prev">&#10094;</a>
